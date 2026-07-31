@@ -121,11 +121,4 @@ Deploy your Node.js code to Lambda functions, or create an API Gateway REST API 
 
 ---
 
-## 🎓 Resume Bullets & Experience Highlights
 
-Use these impact-driven bullets to highlight this project on your technical resume:
-
-*   **Serverless Help Desk System**: Designed and deployed a Serverless IT Help Desk Ticket Management application using **AWS Lambda**, **Amazon API Gateway**, and **Amazon DynamoDB** with integrated **Amazon SNS** real-time alerting.
-*   **NoSQL Optimization**: Engineered a single-table DynamoDB pattern optimizing scan and retrieval workflows, decreasing retrieval latency for end-user employees to sub-10ms.
-*   **Event-Driven Workflows**: Implemented an automated notification pub/sub layer using **Amazon SNS** which processes ticket state triggers, instantly notifying corporate staff and engineers of status modifications and assignment dispatches.
-*   **Production Security Framework**: Authored IAM security policies adhering to the Principle of Least Privilege, securing serverless microservices from unauthorized database edits.

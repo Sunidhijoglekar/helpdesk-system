@@ -1,0 +1,158 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Serverless Help Desk System
+  SAM Template for DynamoDB Single-Table schema, Node.js 18.x Lambda handlers,
+  API Gateway integrations, and SNS Alert Email notification topics.
+
+Globals:
+  Function:
+    Runtime: nodejs18.x
+    Timeout: 15
+    MemorySize: 256
+    Environment:
+      Variables:
+        DYNAMODB_TABLE: !Ref HelpDeskTicketsTable
+        SNS_TOPIC_ARN: !Ref TicketAlertsSNSTopic
+        AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+
+Resources:
+  # -------------------------------------------------------------------------
+  # 1. Amazon DynamoDB Table
+  # -------------------------------------------------------------------------
+  HelpDeskTicketsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: HelpDeskTickets
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: ticketId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ticketId
+          KeyType: HASH
+      # Point-in-time recovery is recommended for production enterprise tables
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  # -------------------------------------------------------------------------
+  # 2. Amazon SNS Notification Topic
+  # -------------------------------------------------------------------------
+  TicketAlertsSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: TicketAlertsTopic
+      DisplayName: "Corporate IT Support Help Desk Notifications"
+
+  # Optional Email subscription for SNS Topic alerts
+  SNSEmailSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref TicketAlertsSNSTopic
+      Protocol: email
+      Endpoint: "admin@yourcompany.com" # Can be overridden in deployments
+
+  # -------------------------------------------------------------------------
+  # 3. AWS Lambda Functions (Serverless Microservices)
+  # -------------------------------------------------------------------------
+  
+  CreateTicketFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: ../backend/lambdas/createTicket/
+      Policies:
+        # Least privilege permissions for writing items to DynamoDB
+        - DynamoDBCrudPolicy:
+            TableName: !Ref HelpDeskTicketsTable
+        # Least privilege permissions for publishing to SNS Topic
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt TicketAlertsSNSTopic.TopicName
+      Events:
+        CreateTicketApi:
+          Type: Api
+          Properties:
+            Path: /tickets
+            Method: post
+
+  GetTicketsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: ../backend/lambdas/getTickets/
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref HelpDeskTicketsTable
+      Events:
+        GetTicketsApi:
+          Type: Api
+          Properties:
+            Path: /tickets
+            Method: get
+
+  GetTicketByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: ../backend/lambdas/getTicketById/
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref HelpDeskTicketsTable
+      Events:
+        GetTicketByIdApi:
+          Type: Api
+          Properties:
+            Path: /tickets/{id}
+            Method: get
+
+  UpdateTicketFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: ../backend/lambdas/updateTicket/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref HelpDeskTicketsTable
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt TicketAlertsSNSTopic.TopicName
+      Events:
+        UpdateTicketApi:
+          Type: Api
+          Properties:
+            Path: /tickets/{id}
+            Method: put
+
+  DeleteTicketFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: ../backend/lambdas/deleteTicket/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref HelpDeskTicketsTable
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt TicketAlertsSNSTopic.TopicName
+      Events:
+        DeleteTicketApi:
+          Type: Api
+          Properties:
+            Path: /tickets/{id}
+            Method: delete
+
+# -------------------------------------------------------------------------
+# Outputs Section
+# -------------------------------------------------------------------------
+Outputs:
+  ApiGatewayUrl:
+    Description: "API Gateway HTTP Regional URL for development integration"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+
+  DynamoDBTableName:
+    Description: "DynamoDB Help Desk Database Table"
+    Value: !Ref HelpDeskTicketsTable
+
+  SNSTopicArn:
+    Description: "Amazon SNS Alert Notification Topic ARN"
+    Value: !Ref TicketAlertsSNSTopic

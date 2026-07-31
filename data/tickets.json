@@ -1,0 +1,112 @@
+[
+  {
+    "ticketId": "TKT-7978",
+    "employeeName": "aaa",
+    "employeeEmail": "aa@gmail.com",
+    "department": "Engineering",
+    "category": "Software Access",
+    "subject": "xxxx",
+    "description": "yyyyyy",
+    "priority": "Medium",
+    "status": "Open",
+    "createdAt": "2026-07-02T06:57:56.945Z",
+    "updatedAt": "2026-07-02T06:57:56.945Z",
+    "assignedTo": "Unassigned",
+    "attachmentUrl": "",
+    "history": [
+      {
+        "id": "hist-1782975476945-1",
+        "timestamp": "2026-07-02T06:57:56.945Z",
+        "action": "Ticket Created",
+        "actor": "aaa",
+        "details": "Ticket submitted via employee portal. Initial Status is Open."
+      }
+    ]
+  },
+  {
+    "ticketId": "TKT-1002",
+    "employeeName": "Ananya Iyer",
+    "employeeEmail": "ananya.iyer@corporate.com",
+    "department": "Finance",
+    "category": "Software Access",
+    "subject": "ERP Tool Access Renewal",
+    "description": "My access to the SAP ERP financial consolidation module has expired. I am unable to download the regional tax returns for the June audit.",
+    "priority": "High",
+    "status": "In Progress",
+    "createdAt": "2026-06-30T23:19:00.000Z",
+    "updatedAt": "2026-07-01T11:19:00.000Z",
+    "assignedTo": "Sarah Jenkins (Support L2)",
+    "attachmentUrl": "",
+    "history": [
+      {
+        "id": "hist-2",
+        "timestamp": "2026-06-30T23:19:00.000Z",
+        "action": "Ticket Created",
+        "actor": "Ananya Iyer",
+        "details": "Ticket submitted. System routed category: Software Access."
+      },
+      {
+        "id": "hist-3",
+        "timestamp": "2026-07-01T11:19:00.000Z",
+        "action": "Ticket Assigned",
+        "actor": "Admin (SysAdmin)",
+        "details": "Assigned support engineer Sarah Jenkins (Support L2). Status set to In Progress."
+      }
+    ]
+  },
+  {
+    "ticketId": "TKT-1003",
+    "employeeName": "Rahul Sharma",
+    "employeeEmail": "rahul.sharma@corporate.com",
+    "department": "Marketing",
+    "category": "Network / VPN",
+    "subject": "Recurrent VPN Disconnects on Bangalore WiFi",
+    "description": "While connected to the Bangalore office secure Wi-Fi, the Cisco AnyConnect VPN client drops connection every 15 minutes. It says 'Gateway Not Responding'. Please advise.",
+    "priority": "Medium",
+    "status": "Open",
+    "createdAt": "2026-07-01T17:19:00.000Z",
+    "updatedAt": "2026-07-01T17:19:00.000Z",
+    "assignedTo": "Unassigned",
+    "attachmentUrl": "",
+    "history": [
+      {
+        "id": "hist-4",
+        "timestamp": "2026-07-01T17:19:00.000Z",
+        "action": "Ticket Created",
+        "actor": "Rahul Sharma",
+        "details": "Ticket submitted. VPN configuration issue logged."
+      }
+    ]
+  },
+  {
+    "ticketId": "TKT-1004",
+    "employeeName": "Priya Patel",
+    "employeeEmail": "priya.patel@corporate.com",
+    "department": "Human Resources",
+    "category": "Software Access",
+    "subject": "HRMS Portal Login Credentials Reset",
+    "description": "I have been locked out of the Workday HRMS portal after three incorrect password attempts. Please trigger a manual reset email.",
+    "priority": "Low",
+    "status": "Resolved",
+    "createdAt": "2026-07-01T19:19:00.000Z",
+    "updatedAt": "2026-07-01T22:19:00.000Z",
+    "assignedTo": "John Doe (Support L1)",
+    "attachmentUrl": "",
+    "history": [
+      {
+        "id": "hist-5",
+        "timestamp": "2026-07-01T19:19:00.000Z",
+        "action": "Ticket Created",
+        "actor": "Priya Patel",
+        "details": "Ticket submitted. Password lock on HRMS."
+      },
+      {
+        "id": "hist-6",
+        "timestamp": "2026-07-01T22:19:00.000Z",
+        "action": "Status Changed",
+        "actor": "John Doe (Support L1)",
+        "details": "Password reset link sent to registered corporate email. Issue Resolved."
+      }
+    ]
+  }
+]

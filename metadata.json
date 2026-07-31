@@ -1,0 +1,6 @@
+{
+  "name": "Serverless Help Desk Ticket Management System",
+  "description": "A complete serverless IT support ticket management application with employee portal, admin dashboard, DynamoDB design, and Amazon SNS notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
